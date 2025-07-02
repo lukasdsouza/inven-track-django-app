@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useEstoque } from '@/hooks/useEstoque';
+import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,8 +20,26 @@ import { Link } from 'react-router-dom';
 
 export function Movimentacao() {
   const { items, registrarMovimento } = useEstoque();
+  const { canAdd } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  // Redirecionar se não pode adicionar
+  if (!canAdd()) {
+    return (
+      <div className="space-y-8 animate-fade-in max-w-2xl mx-auto">
+        <div className="text-center py-12">
+          <h1 className="text-2xl font-bold text-foreground mb-4">Acesso Negado</h1>
+          <p className="text-muted-foreground mb-6">
+            Você não tem permissão para registrar movimentações.
+          </p>
+          <Link to="/">
+            <Button variant="outline">Voltar ao Dashboard</Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
   
   const [formData, setFormData] = useState({
     itemId: '',

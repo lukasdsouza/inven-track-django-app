@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { 
   Package, 
   BarChart3, 
@@ -10,7 +12,9 @@ import {
   X,
   Home,
   TrendingUp,
-  TrendingDown
+  TrendingDown,
+  LogOut,
+  User
 } from 'lucide-react';
 
 const navigation = [
@@ -23,6 +27,16 @@ const navigation = [
 export function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
+  const { user, logout } = useAuth();
+
+  const getRoleBadgeColor = (role: string) => {
+    switch (role) {
+      case 'admin': return 'destructive';
+      case 'gestor': return 'default';
+      case 'visualizador': return 'secondary';
+      default: return 'outline';
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -68,9 +82,38 @@ export function Layout() {
                     );
                   })}
                 </ul>
-              </li>
+               </li>
             </ul>
           </nav>
+          
+          {/* User info */}
+          <div className="border-t border-border pt-4 mt-4">
+            <div className="flex items-center gap-3 px-2 py-3 mb-2">
+              <div className="h-8 w-8 bg-muted rounded-full flex items-center justify-center">
+                <User className="h-4 w-4 text-muted-foreground" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-foreground truncate">
+                  {user?.name}
+                </p>
+                <div className="flex items-center gap-2 mt-1">
+                  <Badge variant={getRoleBadgeColor(user?.role || '')} className="text-xs">
+                    {user?.role === 'admin' ? 'Admin' : 
+                     user?.role === 'gestor' ? 'Gestor' : 'Visualizador'}
+                  </Badge>
+                </div>
+              </div>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={logout}
+              className="w-full justify-start text-muted-foreground hover:text-foreground"
+            >
+              <LogOut className="h-4 w-4 mr-2" />
+              Sair
+            </Button>
+          </div>
         </div>
       </div>
 

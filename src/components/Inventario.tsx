@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useEstoque } from '@/hooks/useEstoque';
+import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,6 +18,7 @@ import { ItemInventario } from '@/types/estoque';
 
 export function Inventario() {
   const { items, removerItem } = useEstoque();
+  const { canAdd, canDelete } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
 
@@ -45,12 +47,14 @@ export function Inventario() {
           <h1 className="text-3xl font-bold text-foreground">Inventário</h1>
           <p className="text-muted-foreground">Gerencie todos os itens do estoque</p>
         </div>
-        <Link to="/inventario/adicionar">
-          <Button className="bg-gradient-primary hover:shadow-glow transition-all duration-300">
-            <Plus className="h-4 w-4 mr-2" />
-            Adicionar Item
-          </Button>
-        </Link>
+        {canAdd() && (
+          <Link to="/inventario/adicionar">
+            <Button className="bg-gradient-primary hover:shadow-glow transition-all duration-300">
+              <Plus className="h-4 w-4 mr-2" />
+              Adicionar Item
+            </Button>
+          </Link>
+        )}
       </div>
 
       {/* Filtros */}
@@ -143,20 +147,24 @@ export function Inventario() {
                     )}
                   </div>
                   
-                  <div className="flex items-center gap-2 ml-4">
-                    <Link to={`/inventario/${item.id}`}>
-                      <Button variant="outline" size="sm">
-                        <Edit className="h-4 w-4" />
+                   <div className="flex items-center gap-2 ml-4">
+                    {canAdd() && (
+                      <Link to={`/inventario/${item.id}`}>
+                        <Button variant="outline" size="sm">
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                      </Link>
+                    )}
+                    {canDelete() && (
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => handleRemoverItem(item)}
+                        className="text-destructive hover:text-destructive-foreground hover:bg-destructive"
+                      >
+                        <Trash2 className="h-4 w-4" />
                       </Button>
-                    </Link>
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={() => handleRemoverItem(item)}
-                      className="text-destructive hover:text-destructive-foreground hover:bg-destructive"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
+                    )}
                   </div>
                 </div>
               </CardContent>
