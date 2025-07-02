@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useEstoque } from '@/hooks/useEstoque';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -13,8 +14,25 @@ import {
 import { Link } from 'react-router-dom';
 
 export function Dashboard() {
-  const { items, movimentos, getEstatisticas } = useEstoque();
+  const { items, movimentos, getEstatisticas, adicionarItem } = useEstoque();
   const stats = getEstatisticas();
+
+  // Importar dados iniciais se o estoque estiver vazio
+  useEffect(() => {
+    const importarDados = async () => {
+      if (items.length === 0) {
+        try {
+          const { estoqueInicial } = await import('@/data/estoque-inicial');
+          estoqueInicial.forEach(item => {
+            adicionarItem(item);
+          });
+        } catch (error) {
+          console.error('Erro ao importar dados iniciais:', error);
+        }
+      }
+    };
+    importarDados();
+  }, [items.length, adicionarItem]);
 
   const movimentosRecentes = movimentos.slice(0, 5);
   const itensEstoqueBaixo = items.filter(item => item.quantidade <= 5);
