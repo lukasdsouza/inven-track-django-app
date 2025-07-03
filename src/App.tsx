@@ -9,6 +9,7 @@ import { Login } from "./components/Login";
 import { Dashboard } from "./components/Dashboard";
 import { Inventario } from "./components/Inventario";
 import { Movimentacao } from "./components/Movimentacao";
+import { UserManagement } from "./components/UserManagement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ function AppContent() {
         <Route path="inventario" element={<Inventario />} />
         <Route path="movimentacao" element={<Movimentacao />} />
         <Route path="historico" element={<Dashboard />} />
+        <Route path="usuarios" element={<UserManagement />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

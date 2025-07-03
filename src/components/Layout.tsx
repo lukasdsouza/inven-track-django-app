@@ -27,6 +27,7 @@ export function Layout() {
     { name: 'Inventário', href: '/inventario', icon: Package },
     ...(canAdd() ? [{ name: 'Nova Movimentação', href: '/movimentacao', icon: Plus }] : []),
     { name: 'Histórico', href: '/historico', icon: BarChart3 },
+    ...(user?.role === 'admin' ? [{ name: 'Usuários', href: '/usuarios', icon: User }] : []),
   ];
 
   const getRoleBadgeColor = (role: string) => {
