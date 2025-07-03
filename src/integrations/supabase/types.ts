@@ -9,7 +9,74 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      inventory_items: {
+        Row: {
+          categoria: string
+          created_at: string
+          id: string
+          material: string
+          observacoes: string | null
+          quantidade: number
+          updated_at: string
+        }
+        Insert: {
+          categoria: string
+          created_at?: string
+          id?: string
+          material: string
+          observacoes?: string | null
+          quantidade?: number
+          updated_at?: string
+        }
+        Update: {
+          categoria?: string
+          created_at?: string
+          id?: string
+          material?: string
+          observacoes?: string | null
+          quantidade?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      inventory_movements: {
+        Row: {
+          horario: string
+          id: string
+          item_id: string
+          material: string
+          observacoes: string | null
+          quantidade: number
+          tipo: string
+        }
+        Insert: {
+          horario?: string
+          id?: string
+          item_id: string
+          material: string
+          observacoes?: string | null
+          quantidade: number
+          tipo: string
+        }
+        Update: {
+          horario?: string
+          id?: string
+          item_id?: string
+          material?: string
+          observacoes?: string | null
+          quantidade?: number
+          tipo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_movements_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
