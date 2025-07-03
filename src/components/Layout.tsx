@@ -17,17 +17,17 @@ import {
   User
 } from 'lucide-react';
 
-const navigation = [
-  { name: 'Dashboard', href: '/', icon: Home },
-  { name: 'Inventário', href: '/inventario', icon: Package },
-  { name: 'Nova Movimentação', href: '/movimentacao', icon: Plus },
-  { name: 'Histórico', href: '/historico', icon: BarChart3 },
-];
-
 export function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
-  const { user, logout } = useAuth();
+  const { user, logout, canAdd } = useAuth();
+
+  const navigation = [
+    { name: 'Dashboard', href: '/', icon: Home },
+    { name: 'Inventário', href: '/inventario', icon: Package },
+    ...(canAdd() ? [{ name: 'Nova Movimentação', href: '/movimentacao', icon: Plus }] : []),
+    { name: 'Histórico', href: '/historico', icon: BarChart3 },
+  ];
 
   const getRoleBadgeColor = (role: string) => {
     switch (role) {

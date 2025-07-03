@@ -13,6 +13,7 @@ export interface AuthContextType {
   canDelete: () => boolean;
   canAdd: () => boolean;
   canManageUsers: () => boolean;
+  canEditUser: (targetUserRole: string) => boolean;
 }
 
 export const USERS: User[] = [

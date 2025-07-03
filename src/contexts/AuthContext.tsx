@@ -44,6 +44,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return user?.role === 'admin';
   };
 
+  const canEditUser = (targetUserRole: string): boolean => {
+    if (user?.role === 'admin') {
+      return true; // Admin pode editar qualquer um, incluindo gestores
+    }
+    return false;
+  };
+
   return (
     <AuthContext.Provider value={{
       user,
@@ -52,7 +59,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       canEdit,
       canDelete,
       canAdd,
-      canManageUsers
+      canManageUsers,
+      canEditUser
     }}>
       {children}
     </AuthContext.Provider>

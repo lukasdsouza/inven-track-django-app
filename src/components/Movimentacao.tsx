@@ -24,21 +24,9 @@ export function Movimentacao() {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  // Redirecionar se não pode adicionar
+  // Se não pode adicionar, não renderiza a página
   if (!canAdd()) {
-    return (
-      <div className="space-y-8 animate-fade-in max-w-2xl mx-auto">
-        <div className="text-center py-12">
-          <h1 className="text-2xl font-bold text-foreground mb-4">Acesso Negado</h1>
-          <p className="text-muted-foreground mb-6">
-            Você não tem permissão para registrar movimentações.
-          </p>
-          <Link to="/">
-            <Button variant="outline">Voltar ao Dashboard</Button>
-          </Link>
-        </div>
-      </div>
-    );
+    return null;
   }
   
   const [formData, setFormData] = useState({
