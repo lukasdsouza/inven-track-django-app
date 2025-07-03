@@ -99,7 +99,7 @@ export function Movimentacao() {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in max-w-2xl mx-auto">
+    <div className="space-y-6 animate-fade-in max-w-2xl mx-auto">
       {/* Header */}
       <div className="flex items-center gap-4">
         <Link to="/">
@@ -107,8 +107,8 @@ export function Movimentacao() {
             <ArrowLeft className="h-4 w-4" />
           </Button>
         </Link>
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">Nova Movimentação</h1>
+        <div className="min-w-0 flex-1">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Nova Movimentação</h1>
           <p className="text-muted-foreground">Registre entradas e saídas de materiais</p>
         </div>
       </div>

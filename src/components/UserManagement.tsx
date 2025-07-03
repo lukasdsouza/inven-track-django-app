@@ -135,11 +135,11 @@ export function UserManagement() {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 animate-fade-in">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Gerenciamento de Usuários</h1>
-          <p className="text-muted-foreground mt-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Gerenciamento de Usuários</h1>
+          <p className="text-muted-foreground">
             Gerencie usuários, permissões e acessos do sistema
           </p>
         </div>
@@ -149,9 +149,10 @@ export function UserManagement() {
               setIsAddingUser(true);
               setEditingUser(null);
               setFormData({ username: '', password: '', name: '', role: 'gestor' });
-            }}>
+            }} className="w-full sm:w-auto">
               <UserPlus className="h-4 w-4 mr-2" />
-              Adicionar Usuário
+              <span className="hidden sm:inline">Adicionar Usuário</span>
+              <span className="sm:hidden">Novo Usuário</span>
             </Button>
           </DialogTrigger>
           <DialogContent>
@@ -231,16 +232,16 @@ export function UserManagement() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {users.map((userItem) => (
-                <div key={userItem.username} className="flex items-center justify-between p-4 border border-border rounded-lg">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3">
-                      <div>
-                        <h3 className="font-medium text-foreground">{userItem.name}</h3>
+                <div key={userItem.username} className="flex flex-col gap-3 p-4 border border-border rounded-lg sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-medium text-foreground truncate">{userItem.name}</h3>
                         <p className="text-sm text-muted-foreground">@{userItem.username}</p>
                       </div>
-                      <Badge variant={getRoleBadgeColor(userItem.role)}>
+                      <Badge variant={getRoleBadgeColor(userItem.role)} className="self-start sm:self-center">
                         {getRoleLabel(userItem.role)}
                       </Badge>
                     </div>

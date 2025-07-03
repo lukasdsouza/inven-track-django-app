@@ -205,9 +205,11 @@ export function Layout() {
         </div>
 
         {/* Conteúdo da página */}
-        <main className="py-8">
-          <div className="px-4 sm:px-6 lg:px-8">
-            <Outlet />
+        <main className="py-4 sm:py-6 lg:py-8">
+          <div className="px-4 sm:px-6 lg:px-8 max-w-full">
+            <div className="max-w-7xl mx-auto">
+              <Outlet />
+            </div>
           </div>
         </main>
       </div>
